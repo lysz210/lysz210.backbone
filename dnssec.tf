@@ -3,7 +3,7 @@ resource "aws_kms_key" "dnssec" {
   provider                 = aws.us_east_1
   customer_master_key_spec = "ECC_NIST_P256"
   key_usage                = "SIGN_VERIFY"
-  description              = "KMS Key for Backbone DNSSEC - lysz210.name"
+  description              = "KMS Key for DNSSEC - lysz210.name"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -39,7 +39,7 @@ resource "aws_kms_key" "dnssec" {
 resource "aws_route53_key_signing_key" "main" {
   hosted_zone_id             = aws_route53_zone.main.zone_id
   key_management_service_arn = aws_kms_key.dnssec.arn
-  name                       = "backbone-ksk"
+  name                       = "lysz210-ksk"
 }
 
 # 3. Abilitazione della firma sulla zona
