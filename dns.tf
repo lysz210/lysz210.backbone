@@ -69,17 +69,17 @@ resource "aws_kms_key" "dnssec" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid    = "Enable IAM User Permissions"
-        Effect = "Allow"
+        Sid       = "Enable IAM User Permissions"
+        Effect    = "Allow"
         Principal = { AWS = "*" }
-        Action   = "kms:*"
-        Resource = "*"
+        Action    = "kms:*"
+        Resource  = "*"
       },
       {
         Sid    = "Allow Route 53 DNSSEC Service"
         Effect = "Allow"
         Principal = {
-          Service = "api-dnssec.route53.amazonaws.com" # FIX: Nome servizio corretto
+          Service = "dnssec-route53.amazonaws.com"
         }
         Action = [
           "kms:DescribeKey",
@@ -89,15 +89,17 @@ resource "aws_kms_key" "dnssec" {
         Resource = "*"
       },
       {
-        Sid    = "Allow Route 53 Create Grant" # FIX: Necessario per DNSSEC
+        Sid    = "Allow Route 53 Create Grant"
         Effect = "Allow"
         Principal = {
-          Service = "api-dnssec.route53.amazonaws.com"
+          Service = "dnssec-route53.amazonaws.com"
         }
         Action   = "kms:CreateGrant"
         Resource = "*"
         Condition = {
-          Bool = { "kms:GrantIsForAWSResource" = "true" }
+          Bool = {
+            "kms:GrantIsForAWSResource" = "true"
+          }
         }
       }
     ]
