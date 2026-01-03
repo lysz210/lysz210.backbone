@@ -7,5 +7,5 @@ output "route53_zone_id" {
 # L'ARN del certificato SSL Wildcard (*.lysz210.name)
 output "acm_certificate_arn" {
   description = "ARN del certificato SSL da usare nelle distribuzioni CloudFront dei MF"
-  value       = aws_acm_certificate.cert.arn
+  value       = aws_acm_certificate.wildcard.arn
 }
