@@ -13,23 +13,6 @@ resource "aws_route53_record" "keybase_verification" {
   ttl     = 172800
   records = ["keybase-site-verification=CSIcI9LwdT2ZCbeyPqVAEIL0Z65TSaByfWoVkeku5Gc"]
 }
-# 3. Record per GitHub Pages (Sottodominio Photos)
-resource "aws_route53_record" "github_photos_cname" {
-  zone_id = aws_route53_zone.main.zone_id
-  name    = "photos.gh.lysz210.name"
-  type    = "CNAME"
-  ttl     = 172800
-  records = ["lysz210.github.io"]
-}
-
-# Record TXT per la sfida di GitHub Pages (Challenge)
-resource "aws_route53_record" "github_pages_challenge" {
-  zone_id = aws_route53_zone.main.zone_id
-  name    = "_github-pages-challenge-lysz210.photos.gh.lysz210.name"
-  type    = "TXT"
-  ttl     = 172800
-  records = ["7374b0f9786fbb7925623491b200e4"]
-}
 
 # 4. Certificato Wildcard (Gestito centralmente)
 resource "aws_acm_certificate" "wildcard" {
