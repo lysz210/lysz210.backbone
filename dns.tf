@@ -60,9 +60,3 @@ resource "aws_ssm_parameter" "wildcard_cert_arn" {
   type  = "String"
   value = aws_acm_certificate.wildcard.arn
 }
-
-# Output utili da vedere a terminale
-output "name_servers" {
-  description = "Nuovi Name Servers da inserire nel pannello Registered Domains"
-  value       = aws_route53_zone.main.name_servers
-}

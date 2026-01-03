@@ -22,4 +22,13 @@ resource "aws_budgets_budget" "monthly_limit" {
     notification_type          = "ACTUAL"
     subscriber_email_addresses = ["lysz210@gmail.com"]
   }
+
+  # 3. Alert PREVISIONALE: quando AWS capisce che supererai i 5€ entro fine mese
+  notification {
+    comparison_operator        = "GREATER_THAN"
+    threshold                  = 100
+    threshold_type             = "PERCENTAGE"
+    notification_type          = "FORECASTED"
+    subscriber_email_addresses = ["lysz210@gmail.com"]
+  }
 }
