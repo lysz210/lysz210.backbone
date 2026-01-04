@@ -10,6 +10,12 @@ output "acm_certificate_arn" {
   value       = aws_acm_certificate.wildcard.arn
 }
 
+output "website" {
+  description = "Dettagli dell'applicazione principale"
+  value       = {
+    host = module.lysz210_host
+  }
+}
 output "lysz210_host_repo_url" {
   description = "URL della repository GitHub"
   value       = module.lysz210_host.repo_url
