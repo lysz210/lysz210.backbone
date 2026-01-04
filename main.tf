@@ -18,3 +18,15 @@ module "lysz210_host" {
   aws_route53_zone_id = aws_route53_zone.main.zone_id
   aws_cert_arn        = aws_acm_certificate.wildcard.arn
 }
+
+module "lysz210_cv" {
+  source = "./modules/cv"
+
+  app_name            = "lysz210_cv"
+  domain_name         = "cv.lysz210.me"
+  github_owner        = "lysz210"
+  github_repo         = "lysz210.cv"
+  aws_oidc_arn        = aws_iam_openid_connect_provider.github.arn
+  aws_route53_zone_id = aws_route53_zone.main.zone_id
+  aws_cert_arn        = aws_acm_certificate.wildcard.arn
+}

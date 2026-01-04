@@ -14,5 +14,6 @@ output "website" {
   description = "Dettagli dell'applicazione principale"
   value       = {
     host = module.lysz210_host
+    cv   = module.lysz210_cv
   }
 }
