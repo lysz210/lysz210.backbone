@@ -15,5 +15,5 @@ output "cloudfront_id" {
 }
 
 output "website_url" {
-  value = "https://${aws_cloudfront_distribution.lysz210_host_distribution.aliases[0]}"
+  value = "https://${aws_route53_record.lysz210_host_alias.name}"
 }
