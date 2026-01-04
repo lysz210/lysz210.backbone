@@ -2,10 +2,10 @@ data "github_repository" "lysz210_host" {
   full_name = "${var.github_owner}/${var.github_repo}"
 }
 
-# resource "github_branch_default" "main" {
-#   repository = github_repository.lysz210_host.name
-#   branch     = "main"
-# }
+resource "github_branch_default" "main" {
+  repository = github_repository.lysz210_host.name
+  branch     = "main"
+}
 
 # resource "github_actions_variable" "iam_role_arn" {
 #   repository    = github_repository.lysz210_host.name
