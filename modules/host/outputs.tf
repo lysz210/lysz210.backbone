@@ -7,13 +7,13 @@ output "repo_ssh" {
 }
 
 output "s3_bucket_name" {
-  value = aws_s3_bucket.host_storage.id
+  value = aws_s3_bucket.lysz210_host_storage.id
 }
 
 output "cloudfront_id" {
-  value = aws_cloudfront_distribution.s3_distribution.id
+  value = aws_cloudfront_distribution.lysz210_host_distribution.id
 }
 
 output "website_url" {
-  value = "https://${aws_cloudfront_distribution.s3_distribution.aliases[0]}"
+  value = "https://${aws_cloudfront_distribution.lysz210_host_distribution.aliases[0]}"
 }
