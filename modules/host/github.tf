@@ -3,7 +3,7 @@ data "github_repository" "lysz210_host" {
 }
 
 resource "github_branch_default" "main" {
-  repository = data.github_repository.lysz210_host.name
+  repository = data.github_repository.lysz210_host.id
   branch     = "main"
 }
 
