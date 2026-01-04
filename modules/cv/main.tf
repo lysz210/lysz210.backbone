@@ -71,6 +71,14 @@ resource "aws_lambda_function_url" "nuxt_url" {
   }
 }
 
+
+
+locals {
+  static_paths = [
+    "/favicon.ico",
+    "/_nuxt/*"
+  ]
+}
 resource "aws_cloudfront_distribution" "lysz210_cv_distribution" {
   enabled             = true
   is_ipv6_enabled     = true
@@ -94,18 +102,24 @@ resource "aws_cloudfront_distribution" "lysz210_cv_distribution" {
     origin_access_control_id = aws_cloudfront_origin_access_control.lysz210_cv_oac.id
   }
 
-  ordered_cache_behavior {
-    path_pattern     = "/_nuxt/*"
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "S3-lysz210-cv"
 
-    forwarded_values {
-      query_string = false
-      cookies { forward = "none" }
+  dynamic "ordered_cache_behavior" {
+    for_each = local.static_paths
+    content {
+      path_pattern     = ordered_cache_behavior.value
+      target_origin_id = "S3-Lysz210-Host"
+
+      allowed_methods = ["GET", "HEAD"]
+      cached_methods  = ["GET", "HEAD"]
+
+      forwarded_values {
+        query_string = false
+        cookies { forward = "none" }
+      }
+
+      viewer_protocol_policy = "redirect-to-https"
+      cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"
     }
-
-    viewer_protocol_policy = "redirect-to-https"
   }
 
   default_cache_behavior {

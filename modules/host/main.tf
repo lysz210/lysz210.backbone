@@ -17,6 +17,35 @@ resource "aws_cloudfront_origin_access_control" "lysz210_host_oac" {
   signing_protocol                  = "sigv4"
 }
 
+locals {
+  static_paths = [
+    "/favicon.ico",
+    "/_nuxt/*"
+  ]
+}
+
+resource "aws_cloudfront_function" "rewrite_uri" {
+  name    = "rewrite-uri"
+  runtime = "cloudfront-js-2.0"
+  publish = true
+  code    = <<EOF
+function handler(event) {
+    var request = event.request;
+    var uri = request.uri;
+    
+    // Se l'URI non ha estensione (es. non è .js, .css, .png), aggiungi index.html
+    if (!uri.includes('.')) {
+        if (uri.endsWith('/')) {
+            request.uri += 'index.html';
+        } else {
+            request.uri += '/index.html';
+        }
+    }
+    
+    return request;
+}
+EOF
+}
 resource "aws_cloudfront_distribution" "lysz210_host_distribution" {
   enabled             = true
   is_ipv6_enabled     = true
@@ -27,6 +56,24 @@ resource "aws_cloudfront_distribution" "lysz210_host_distribution" {
     domain_name              = aws_s3_bucket.lysz210_host_storage.bucket_regional_domain_name
     origin_id                = "S3-Lysz210-Host"
     origin_access_control_id = aws_cloudfront_origin_access_control.lysz210_host_oac.id
+  }
+
+  dynamic "ordered_cache_behavior" {
+    for_each = local.static_paths
+    content {
+      path_pattern     = ordered_cache_behavior.value
+      target_origin_id = "S3-Lysz210-Host"
+
+      allowed_methods = ["GET", "HEAD"]
+      cached_methods  = ["GET", "HEAD"]
+
+      forwarded_values {
+        query_string = false
+        cookies { forward = "none" }
+      }
+
+      viewer_protocol_policy = "redirect-to-https"
+    }
   }
 
   default_cache_behavior {
@@ -40,9 +87,10 @@ resource "aws_cloudfront_distribution" "lysz210_host_distribution" {
     }
 
     viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.rewrite_uri.arn
+    }
   }
 
   custom_error_response {
