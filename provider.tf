@@ -37,5 +37,6 @@ provider "github" {
 
 # Solo per test, rimuovi dopo!
 output "check_token_length" {
-  value = length(var.github_token)
+  value     = length(var.github_token)
+  sensitive = true
 }
