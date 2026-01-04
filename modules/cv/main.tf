@@ -71,13 +71,20 @@ resource "aws_lambda_function_url" "nuxt_url" {
   }
 }
 
-
-
 locals {
   static_paths = [
     "/favicon.ico",
     "/_nuxt/*"
   ]
+}
+data "aws_cloudfront_cache_policy" "optimized" {
+  name = "Managed-CachingOptimized"
+}
+data "aws_cloudfront_cache_policy" "disabled" {
+  name = "Managed-CachingDisabled"
+}
+data "aws_cloudfront_origin_request_policy" "all_viewer" {
+  name = "Managed-AllViewerExceptHostHeader"
 }
 resource "aws_cloudfront_distribution" "lysz210_cv_distribution" {
   enabled             = true
@@ -102,12 +109,24 @@ resource "aws_cloudfront_distribution" "lysz210_cv_distribution" {
     origin_access_control_id = aws_cloudfront_origin_access_control.lysz210_cv_oac.id
   }
 
+  ordered_cache_behavior {
+    path_pattern     = "/api/*"
+    target_origin_id = "Lambda-lysz210-cv" # Deve corrispondere all'ID nel blocco origin
 
+    allowed_methods = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods  = ["GET", "HEAD"]
+
+    viewer_protocol_policy = "redirect-to-https"
+
+    # Fondamentale: Disabilita la cache per le chiamate API
+    cache_policy_id          = data.aws_cloudfront_cache_policy.disabled.id
+    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.all_viewer.id
+  }
   dynamic "ordered_cache_behavior" {
     for_each = local.static_paths
     content {
       path_pattern     = ordered_cache_behavior.value
-      target_origin_id = "S3-Lysz210-Host"
+      target_origin_id = "S3-lysz210-cv"
 
       allowed_methods = ["GET", "HEAD"]
       cached_methods  = ["GET", "HEAD"]
@@ -118,7 +137,7 @@ resource "aws_cloudfront_distribution" "lysz210_cv_distribution" {
       }
 
       viewer_protocol_policy = "redirect-to-https"
-      cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+      cache_policy_id        = data.aws_cloudfront_cache_policy.optimized.id
     }
   }
 

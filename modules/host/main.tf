@@ -24,6 +24,9 @@ locals {
   ]
 }
 
+data "aws_cloudfront_cache_policy" "optimized" {
+  name = "Managed-CachingOptimized"
+}
 resource "aws_cloudfront_function" "rewrite_uri" {
   name    = "rewrite-uri"
   runtime = "cloudfront-js-2.0"
@@ -73,6 +76,7 @@ resource "aws_cloudfront_distribution" "lysz210_host_distribution" {
       }
 
       viewer_protocol_policy = "redirect-to-https"
+      cache_policy_id        = data.aws_cloudfront_cache_policy.optimized.id
     }
   }
 
