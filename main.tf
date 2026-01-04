@@ -10,10 +10,6 @@ resource "aws_iam_openid_connect_provider" "github" {
 module "lysz210_host" {
   source = "./modules/host"
 
-  providers = {
-    github = github
-  }
-
   app_name            = "lysz210_host"
   domain_name         = "lysz210.me"
   github_owner        = "lysz210"
