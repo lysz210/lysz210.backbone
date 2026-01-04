@@ -1,5 +1,5 @@
 data "github_repository" "lysz210_host" {
-  name        = "${var.github_repo}"
+  full_name = "${var.github_owner}/${var.github_repo}"
 }
 
 # resource "github_branch_default" "main" {
