@@ -1,5 +1,5 @@
 data "github_repository" "lysz210_host" {
-  name = "${var.github_repo}"
+  name = "${var.github_owner}/${var.github_repo}"
 }
 
 resource "github_actions_variable" "iam_role_arn" {
