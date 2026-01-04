@@ -19,7 +19,7 @@ data "aws_region" "current" {}
 resource "github_actions_variable" "s3_bucket_region" {
   repository    = github_repository.lysz210_host.name
   variable_name = "AWS_REGION"
-  value         = data.aws_region.current.name
+  value         = data.aws_region.current.id
 }
 resource "github_actions_variable" "iam_role_arn" {
   repository    = github_repository.lysz210_host.name

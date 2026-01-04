@@ -54,7 +54,7 @@ resource "aws_lambda_function" "nuxt_server" {
 
   # Ignoriamo le modifiche al codice fatte da GitHub Actions
   lifecycle {
-    ignore_changes = [filename, source_code_hash, last_modified]
+    ignore_changes = [filename, source_code_hash]
   }
 }
 
