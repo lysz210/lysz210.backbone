@@ -1,18 +1,14 @@
 resource "github_repository" "lysz210_host" {
   name        = "${var.github_repo}"
   description = "Host Application for lysz210.me"
-}
-
-resource "github_branch" "main" {
-  repository = github_repository.lysz210_host.name
-  branch     = "main"
+  auto_init = true
 }
 
 resource "github_branch" "develop" {
   repository = github_repository.lysz210_host.name
   branch     = "develop"
 }
-resource "github_branch_default" "default_main" {
+resource "github_branch_default" "default_branch" {
   repository = github_repository.lysz210_host.name
   branch     = github_branch.develop.branch
 }
