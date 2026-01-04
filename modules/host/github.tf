@@ -13,6 +13,14 @@ resource "github_branch_default" "default_branch" {
   repository = github_repository.lysz210_host.name
   branch     = github_branch.develop.branch
 }
+
+data "aws_region" "current" {}
+
+resource "github_actions_variable" "s3_bucket_region" {
+  repository    = github_repository.lysz210_host.name
+  variable_name = "AWS_REGION"
+  value         = data.aws_region.current.name
+}
 resource "github_actions_variable" "iam_role_arn" {
   repository    = github_repository.lysz210_host.name
   variable_name = "AWS_ROLE_ARN"
