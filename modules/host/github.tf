@@ -8,12 +8,14 @@ resource "github_branch" "main" {
   branch     = "main"
 }
 
-
-resource "github_branch_default" "main" {
+resource "github_branch" "develop" {
   repository = github_repository.lysz210_host.name
-  branch     = "main"
+  branch     = "develop"
 }
-
+resource "github_branch_default" "default_main" {
+  repository = github_repository.lysz210_host.name
+  branch     = github_branch.develop.branch
+}
 resource "github_actions_variable" "iam_role_arn" {
   repository    = github_repository.lysz210_host.name
   variable_name = "AWS_ROLE_ARN"
