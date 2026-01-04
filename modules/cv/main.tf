@@ -49,7 +49,7 @@ resource "aws_lambda_function" "nuxt_server" {
   role          = aws_iam_role.lambda_role.arn
   handler       = "index.handler"
   runtime       = "nodejs24.x"
-  filename      = data.archive_file.dummy.output_path
+  filename      = data.archive_file.dummy_lambda_zip.output_path
   timeout       = 30
 
   # Ignoriamo le modifiche al codice fatte da GitHub Actions

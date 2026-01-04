@@ -15,7 +15,7 @@ output "cloudfront_id" {
 }
 
 output "lambda_function_name" {
-  value = aws_lambda_function.lysz210_cv_function.function_name
+  value = aws_lambda_function.nuxt_server.function_name
 }
 
 output "website_url" {
