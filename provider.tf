@@ -1,5 +1,5 @@
 terraform {
-  # Configurazione per Terraform Cloud
+  required_version = ">= 1.0"
   cloud {
     organization = "lysz210"
 
@@ -13,6 +13,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    github = {
+      source  = "integrations/github"
+      version = "~> 6.0"
+    }
   }
 }
 
@@ -25,4 +29,9 @@ provider "aws" {
 provider "aws" {
   alias  = "us_east_1"
   region = "us-east-1"
+}
+
+provider "github" {
+  token = var.github_token
+  owner = "lysz210"
 }
