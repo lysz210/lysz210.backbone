@@ -7,6 +7,7 @@ resource "github_repository" "lysz210_host" {
 resource "github_branch" "develop" {
   repository = github_repository.lysz210_host.name
   branch     = "develop"
+  depends_on = [ github_repository.lysz210_host ]
 }
 resource "github_branch_default" "default_branch" {
   repository = github_repository.lysz210_host.name
