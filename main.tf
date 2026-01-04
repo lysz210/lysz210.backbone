@@ -11,7 +11,7 @@ module "lysz210_host" {
   source = "./modules/host"
 
   providers = {
-    github = "github"
+    github = github
   }
 
   app_name            = "lysz210_host"
