@@ -74,6 +74,7 @@ resource "aws_lambda_function_url" "nuxt_url" {
 locals {
   static_paths = [
     "/favicon.ico",
+    "robots.txt",
     "/_nuxt/*"
   ]
 }
@@ -130,11 +131,6 @@ resource "aws_cloudfront_distribution" "lysz210_cv_distribution" {
 
       allowed_methods = ["GET", "HEAD"]
       cached_methods  = ["GET", "HEAD"]
-
-      forwarded_values {
-        query_string = false
-        cookies { forward = "none" }
-      }
 
       viewer_protocol_policy = "redirect-to-https"
       cache_policy_id        = data.aws_cloudfront_cache_policy.optimized.id
