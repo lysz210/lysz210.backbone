@@ -33,6 +33,12 @@ resource "github_actions_variable" "s3_bucket" {
   value         = aws_s3_bucket.lysz210_cv_storage.id
 }
 
+resource "github_actions_variable" "lambda_function_name" {
+  repository    = github_repository.lysz210_cv.name
+  variable_name = "LAMBDA_FUNCTION_NAME"
+  value         = aws_lambda_function.nuxt_server.function_name
+}
+
 # Crea la variabile per l'ID di CloudFront
 resource "github_actions_variable" "cloudfront_id" {
   repository    = github_repository.lysz210_cv.name
