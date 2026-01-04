@@ -34,3 +34,8 @@ provider "aws" {
 provider "github" {
   token = var.github_token
 }
+
+# Solo per test, rimuovi dopo!
+output "check_token_length" {
+  value = length(var.github_token)
+}
