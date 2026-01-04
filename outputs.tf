@@ -12,7 +12,7 @@ output "acm_certificate_arn" {
 
 output "website" {
   description = "Dettagli dell'applicazione principale"
-  value       = {
+  value = {
     host = module.lysz210_host
     cv   = module.lysz210_cv
   }

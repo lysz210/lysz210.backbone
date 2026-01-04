@@ -1,13 +1,13 @@
 resource "github_repository" "lysz210_host" {
-  name        = "${var.github_repo}"
+  name        = var.github_repo
   description = "Host Application for lysz210.me"
-  auto_init = true
+  auto_init   = true
 }
 
 resource "github_branch" "develop" {
   repository = github_repository.lysz210_host.name
   branch     = "develop"
-  depends_on = [ github_repository.lysz210_host ]
+  depends_on = [github_repository.lysz210_host]
 }
 resource "github_branch_default" "default_branch" {
   repository = github_repository.lysz210_host.name

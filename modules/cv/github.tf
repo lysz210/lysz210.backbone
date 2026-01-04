@@ -1,13 +1,13 @@
 resource "github_repository" "lysz210_cv" {
-  name        = "${var.github_repo}"
+  name        = var.github_repo
   description = "Curriculum Vitae Application"
-  auto_init = true
+  auto_init   = true
 }
 
 resource "github_branch" "develop" {
   repository = github_repository.lysz210_cv.name
   branch     = "develop"
-  depends_on = [ github_repository.lysz210_cv ]
+  depends_on = [github_repository.lysz210_cv]
 }
 resource "github_branch_default" "default_branch" {
   repository = github_repository.lysz210_cv.name

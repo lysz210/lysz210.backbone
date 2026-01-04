@@ -46,9 +46,9 @@ resource "aws_cloudfront_distribution" "lysz210_cv_distribution" {
   }
 
   custom_error_response {
-    error_code            = 404
-    response_code         = 200
-    response_page_path    = "/index.html"
+    error_code         = 404
+    response_code      = 200
+    response_page_path = "/index.html"
   }
 
   restrictions {
@@ -84,7 +84,7 @@ resource "aws_s3_bucket_policy" "allow_cloudfront" {
 
 resource "aws_route53_record" "lysz210_cv_alias" {
   zone_id = var.aws_route53_zone_id
-  name    = "${var.domain_name}"
+  name    = var.domain_name
   type    = "A"
 
   alias {

@@ -43,8 +43,8 @@ resource "aws_iam_role_policy" "github_actions_policy" {
         ]
       },
       {
-        Effect = "Allow"
-        Action = ["cloudfront:CreateInvalidation"]
+        Effect   = "Allow"
+        Action   = ["cloudfront:CreateInvalidation"]
         Resource = [aws_cloudfront_distribution.lysz210_host_distribution.arn]
       }
     ]
