@@ -33,6 +33,7 @@ provider "aws" {
 
 provider "github" {
   token = var.github_token
+  owner = "lysz210"
 }
 
 # Solo per test, rimuovi dopo!
