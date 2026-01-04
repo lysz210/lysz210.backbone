@@ -10,15 +10,15 @@ output "acm_certificate_arn" {
   value       = aws_acm_certificate.wildcard.arn
 }
 
-# output "lysz210_host_repo_url" {
-#   description = "URL della repository GitHub"
-#   value       = module.lysz210_host.repo_url
-# }
+output "lysz210_host_repo_url" {
+  description = "URL della repository GitHub"
+  value       = module.lysz210_host.repo_url
+}
 
-# output "lysz210_host_repo_ssh" {
-#   description = "URL SSH della repository GitHub"
-#   value       = module.lysz210_host.repo_ssh
-# }
+output "lysz210_host_repo_ssh" {
+  description = "URL SSH della repository GitHub"
+  value       = module.lysz210_host.repo_ssh
+}
 
 output "lysz210_host_s3_bucket" {
   description = "Nome del bucket S3 per l'hosting"
