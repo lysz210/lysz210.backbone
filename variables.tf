@@ -7,5 +7,5 @@ variable "github_token" {
 variable "keybase_verification_code" {
   description = "Keybase verification code for domain ownership"
   type        = string
-  sensitive = true
+  sensitive   = true
 }
