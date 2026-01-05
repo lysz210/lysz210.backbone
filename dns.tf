@@ -11,7 +11,7 @@ resource "aws_route53_record" "keybase_verification" {
   name    = "lysz210.me"
   type    = "TXT"
   ttl     = 172800
-  records = ["keybase-site-verification=CSIcI9LwdT2ZCbeyPqVAEIL0Z65TSaByfWoVkeku5Gc"]
+  records = [var.keybase_verification_code]
 }
 
 # 3. Certificato Wildcard
